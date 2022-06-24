@@ -1,0 +1,14 @@
+.filter-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 175px;
+  /* border: 1px solid red; */
+}
+
+@media screen and (max-width: 1040px) {
+  .filter-buttons {
+    display: none;
+  }
+}
