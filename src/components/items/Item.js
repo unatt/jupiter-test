@@ -15,8 +15,6 @@ const Item = React.memo((props) => {
     props.onFilter(category);
   };
 
-  console.log('item is rendering');
-
   return (
     <div
       className={
