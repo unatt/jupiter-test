@@ -3,8 +3,9 @@
   display: flex;
   justify-content: center;
   align-self: center;
-  margin: 40px 0;
-  border: 1px solid magenta;
+  padding: 40px 0;
+  /* margin: 40px 0; */
+  /* border: 1px solid magenta; */
 }
 
 .select {
