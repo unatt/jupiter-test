@@ -76,7 +76,7 @@ const ItemsList = () => {
 
   const handleUserKeyPress = useCallback(
     (event) => {
-      if (event.keyCode === 46) {
+      if (event.keyCode === 46 || event.keyCode === 8) {
         setItems((curItems) => {
           const newItems = curItems.filter((item) => !item.isSelected);
           return newItems;

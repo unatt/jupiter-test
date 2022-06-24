@@ -17,6 +17,7 @@
 .loader-button {
   width: 170px;
   height: 48px;
+  background-color: transparent;
   border-style: none;
   font-size: 14px;
   font-weight: 900;
