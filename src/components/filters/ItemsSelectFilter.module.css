@@ -1,9 +1,10 @@
 .selection-filter {
+  background-color: #fdf0e9;
   display: flex;
   justify-content: center;
   align-self: center;
   margin: 40px 0;
-  /* border: 1px solid magenta; */
+  border: 1px solid magenta;
 }
 
 .select {

@@ -28,7 +28,7 @@ const Item = React.memo((props) => {
         <button onClick={filterHandler} className={classes['category-button']}>
           {category}
         </button>
-        <h2 className={classes.title}>{title}</h2>
+        <h2 className={classes.title} >{title}</h2>
       </div>
     </div>
   );
