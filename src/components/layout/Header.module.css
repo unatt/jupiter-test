@@ -4,25 +4,21 @@
   height: 400px;
   color: #fff;
   min-width: 320px;
-  
 }
 
 .header .actions {
   display: flex;
   align-items: center;
   height: 80px;
-  /* border: 1px solid red; */
 }
 
 .header .actions .logo,
 .header .actions .contact {
   flex: 1;
-  /* border: 1px solid green; */
 }
 
 .header .actions nav {
   flex: 1;
-  /* border: 1px solid green; */
 }
 
 .header .actions nav ul {
@@ -32,8 +28,9 @@
 }
 
 .header .actions nav ul li {
-  font-size: 16px;
-  /* border: 1px solid magenta; */
+  font-size: 1rem;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .header .title {
@@ -61,6 +58,7 @@
   border-radius: 5px;
   margin: 16px 0;
   color: #fff;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 540px) {

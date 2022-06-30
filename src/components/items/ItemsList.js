@@ -15,7 +15,7 @@ const ItemsList = () => {
 
   const itemsCategories = [...new Set(items.map((item) => item.category))];
 
-  const fetchItemsHandler = useCallback(async (p) => {
+  const fetchItemsHandler = useCallback(async (page) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -32,15 +32,14 @@ const ItemsList = () => {
 
       for (const key in data) {
         loadedItems.push({
-          id: p ? `${key}-${p}` : key,
-          title: p ? `${data[key].title}-${p}` : data[key].title,
+          id: page ? `${key}-${page}` : key,
+          title: page ? `${data[key].title}-${page}` : data[key].title,
           category: data[key].category,
           img: data[key].img,
           isSelected: false,
         });
       }
-      console.log(loadedItems);
-      if (p) {
+      if (page) {
         setItems((curItems) => {
           const newItems = [...curItems].concat(loadedItems);
           return newItems;
@@ -59,9 +58,8 @@ const ItemsList = () => {
   }, [fetchItemsHandler]);
 
   const loadMorePages = () => {
-    setPage((p) => (p += 1));
+    setPage((page) => (page += 1));
     fetchItemsHandler(page);
-    console.log(items);
   };
 
   let content;
@@ -88,7 +86,6 @@ const ItemsList = () => {
               (item) => !item.isSelected
             );
             if (newFilteredItems.length === 0) {
-              console.log('deleted all items in cat');
               setSelectedCategory('all');
               return;
             }
@@ -113,11 +110,9 @@ const ItemsList = () => {
       newItems = newItems.map((item) => {
         if (item.id === itemId) {
           item.isSelected = isSelected;
-          console.log(item.isSelected);
         }
         return item;
       });
-      console.log(newItems);
       return newItems;
     });
   };
