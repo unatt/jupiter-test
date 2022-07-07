@@ -1,14 +1,18 @@
 import React from 'react';
 import classes from './ItemsButtonsFilter.module.css';
 import FilterButton from './FilterButton';
+import { useSelector, useDispatch } from 'react-redux';
+import { itemsActions } from '../../store/items-slice';
 
 const ItemsButtonsFilter = (props) => {
+  const selectedCategory = useSelector((state) => state.items.filterCategory);
+  const dispatch = useDispatch();
+
   const filterCategoryHandler = (id) => {
     if (id === 'all') {
-      console.log('clear filter');
-      props.onClearFilter();
+      dispatch(itemsActions.clearFilter());
     } else {
-      props.onFilterCategory(id);
+      dispatch(itemsActions.setFilterCategory(id));
     }
   };
 
@@ -19,7 +23,7 @@ const ItemsButtonsFilter = (props) => {
         id="all"
         name="Show All"
         onSelect={filterCategoryHandler}
-        isSelected={'all' === props.selectedCategory}
+        isSelected={'' === selectedCategory}
       />
       {props.categories.map((category) => (
         <FilterButton
@@ -27,7 +31,7 @@ const ItemsButtonsFilter = (props) => {
           name={category}
           id={category}
           onSelect={filterCategoryHandler}
-          isSelected={category === props.selectedCategory}
+          isSelected={category === selectedCategory}
         />
       ))}
     </div>

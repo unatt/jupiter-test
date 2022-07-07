@@ -1,65 +1,40 @@
-import React, { Fragment, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import ItemsButtonsFilter from '../filters/ItemsButtonsFilter';
 import classes from './ItemsList.module.css';
 import Item from './Item';
 import ItemsSelectFilter from '../filters/ItemsSelectFilter';
+import { itemsActions } from '../../store/items-slice';
+import { fetchItemsData } from '../../store/items-slice';
 
 const ItemsList = () => {
-  const [items, setItems] = useState([]);
-  const [filterdItems, setFilteredItems] = useState([...items]);
+  const items = useSelector((state) => state.items.filteredItems);
+  const categories = useSelector((state) => [
+    ...new Set(state.items.items.map((item) => item.category)),
+  ]);
+
+  const selectedCategory = useSelector((state) => state.items.filterCategory);
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
 
-  const [selectedCategory, setSelectedCategory] = useState('all');
-
-  const itemsCategories = [...new Set(items.map((item) => item.category))];
-
-  const fetchItemsHandler = useCallback(async (page) => {
+  useEffect(() => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(
-        'https://jupiter-test-a0449-default-rtdb.europe-west1.firebasedatabase.app/projects.json'
-      );
-      if (!response.ok) {
-        throw new Error('Something went wrong!');
-      }
-
-      const data = await response.json();
-
-      const loadedItems = [];
-
-      for (const key in data) {
-        loadedItems.push({
-          id: page ? `${key}-${page}` : key,
-          title: page ? `${data[key].title}-${page}` : data[key].title,
-          category: data[key].category,
-          img: data[key].img,
-          isSelected: false,
-        });
-      }
-      if (page) {
-        setItems((curItems) => {
-          const newItems = [...curItems].concat(loadedItems);
-          return newItems;
-        });
-      } else {
-        setItems(loadedItems);
-      }
+      dispatch(fetchItemsData());
     } catch (error) {
-      setError(error.message);
+      setError(error);
     }
     setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    fetchItemsHandler();
-  }, [fetchItemsHandler]);
+  }, [dispatch]);
 
   const loadMorePages = () => {
     setPage((page) => (page += 1));
-    fetchItemsHandler(page);
+    dispatch(fetchItemsData(page));
   };
 
   let content;
@@ -75,26 +50,10 @@ const ItemsList = () => {
   const handleUserKeyPress = useCallback(
     (event) => {
       if (event.keyCode === 46 || event.keyCode === 8) {
-        setItems((curItems) => {
-          const newItems = curItems.filter((item) => !item.isSelected);
-          return newItems;
-        });
-
-        if (filterdItems) {
-          setFilteredItems((curFilteredItems) => {
-            const newFilteredItems = curFilteredItems.filter(
-              (item) => !item.isSelected
-            );
-            if (newFilteredItems.length === 0) {
-              setSelectedCategory('all');
-              return;
-            }
-            return newFilteredItems;
-          });
-        }
+        dispatch(itemsActions.removeSelectedItems());
       }
     },
-    [filterdItems]
+    [dispatch]
   );
 
   useEffect(() => {
@@ -104,81 +63,40 @@ const ItemsList = () => {
     };
   }, [handleUserKeyPress]);
 
-  const selectItemHandler = (itemId, isSelected) => {
-    setItems((curItems) => {
-      let newItems = [...curItems];
-      newItems = newItems.map((item) => {
-        if (item.id === itemId) {
-          item.isSelected = isSelected;
-        }
-        return item;
-      });
-      return newItems;
-    });
-  };
-
-  const filterCategoryHandler = (categoryToFilter) => {
-    setFilteredItems(
-      [...items].filter((item) => item.category === categoryToFilter)
-    );
-    setSelectedCategory(categoryToFilter);
-  };
-
-  const clearFilterHandler = () => {
-    setSelectedCategory('all');
-  };
-
-  let itemsToShow = selectedCategory !== 'all' ? filterdItems : items;
-
   return (
-    <Fragment>
-      <main className={classes['main-area']}>
-        <section>
-          <ItemsButtonsFilter
-            categories={itemsCategories}
-            onFilterCategory={filterCategoryHandler}
-            onClearFilter={clearFilterHandler}
-            selectedCategory={selectedCategory}
-          />
-          <ItemsSelectFilter
-            categories={itemsCategories}
-            onFilterCategory={filterCategoryHandler}
-            onClearFilter={clearFilterHandler}
-            selectedCategory={selectedCategory}
-          />
-        </section>
-        <section>
-          {/* <h2>List of items</h2> */}
-          <div className={classes.oucontainer}>
-            <div className={classes.incontainer}>
-              {itemsToShow.map((item) => (
-                <Item
-                  key={item.id}
-                  id={item.id}
-                  title={item.title}
-                  img={item.img}
-                  category={item.category}
-                  selected={item.isSelected}
-                  onSelect={selectItemHandler}
-                  onFilter={filterCategoryHandler}
-                />
-              ))}
-            </div>
+    <main className={classes['main-area']}>
+      <section>
+        <ItemsButtonsFilter categories={categories} />
+        <ItemsSelectFilter categories={categories} />
+      </section>
+      <section>
+        <div className={classes.oucontainer}>
+          <div className={classes.incontainer}>
+            {items.map((item) => (
+              <Item
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                img={item.img}
+                category={item.category}
+                selected={item.isSelected}
+              />
+            ))}
           </div>
-          <div className={classes['loading-status']}>{content}</div>
-          {selectedCategory === 'all' && (
-            <div className={classes.loader}>
-              <button
-                onClick={loadMorePages}
-                className={classes['loader-button']}
-              >
-                LOAD MORE
-              </button>
-            </div>
-          )}
-        </section>
-      </main>
-    </Fragment>
+        </div>
+        <div className={classes['loading-status']}>{content}</div>
+        {!selectedCategory && (
+          <div className={classes.loader}>
+            <button
+              onClick={loadMorePages}
+              className={classes['loader-button']}
+            >
+              LOAD MORE
+            </button>
+          </div>
+        )}
+      </section>
+    </main>
   );
 };
 

@@ -4,7 +4,6 @@ import classes from './FilterButton.module.css';
 const FilterButton = ({ id, name, onSelect, isSelected }) => {
   const selectHandler = () => {
     onSelect(id);
-    console.log(id);
   };
   return (
     <button

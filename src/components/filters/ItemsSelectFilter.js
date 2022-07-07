@@ -1,27 +1,25 @@
 import React from 'react';
 import classes from './ItemsSelectFilter.module.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { itemsActions } from '../../store/items-slice';
 
-const ItemsSelectFilter = ({
-  selectedCategory,
-  categories,
-  onFilterCategory,
-  onClearFilter,
-}) => {
+const ItemsSelectFilter = ({ categories }) => {
+  const selectedCategory = useSelector((state) => state.items.filterCategory);
+  const dispatch = useDispatch();
+
   const selectHandler = (event) => {
     const selectedValue = event.target.value;
 
     if (selectedValue === 'all') {
-      console.log('clear filter');
-      onClearFilter();
+      dispatch(itemsActions.clearFilter());
     } else {
-      onFilterCategory(selectedValue);
+      dispatch(itemsActions.setFilterCategory(selectedValue));
     }
   };
 
   return (
     <div className={classes['selection-filter']}>
       <div className={classes.select}>
-        {/* <h3>ItemsSelectFilter</h3> */}
         <select onChange={selectHandler} value={selectedCategory}>
           <option value="all">Show All</option>
           {categories.map((category) => (
@@ -29,7 +27,6 @@ const ItemsSelectFilter = ({
               {category}
             </option>
           ))}
-          <span class="focus"></span>
         </select>
       </div>
     </div>
