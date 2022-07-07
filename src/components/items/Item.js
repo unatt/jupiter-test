@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classes from './Item.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { itemsActions } from '../../store/items-slice';
 
 const Item = React.memo((props) => {
   const { title, img, category, id, selected } = props;
-  const dispatch = useDispatch();
-
-  // const [isSelected, setIsSelected] = useState(selected);
+  const dispatch = useDispatch()
 
   const selectHandler = () => {
 

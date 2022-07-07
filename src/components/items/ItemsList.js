@@ -9,7 +9,14 @@ import { itemsActions } from '../../store/items-slice';
 import { fetchItemsData } from '../../store/items-slice';
 
 const ItemsList = () => {
-  const items = useSelector((state) => state.items.filteredItems);
+  const filteredItems = useSelector((state) => {
+    if (state.items.filterCategory) {
+      return state.items.items.filter(
+        (item) => item.category === state.items.filterCategory
+      );
+    } else return state.items.items;
+  });
+
   const categories = useSelector((state) => [
     ...new Set(state.items.items.map((item) => item.category)),
   ]);
@@ -72,7 +79,7 @@ const ItemsList = () => {
       <section>
         <div className={classes.oucontainer}>
           <div className={classes.incontainer}>
-            {items.map((item) => (
+            {filteredItems.map((item) => (
               <Item
                 key={item.id}
                 id={item.id}

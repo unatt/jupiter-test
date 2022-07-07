@@ -2,24 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const itemsSLice = createSlice({
   name: 'items',
-  initialState: { items: [], filteredItems: [], filterCategory: '' },
+  initialState: { items: [], filterCategory: '' },
   reducers: {
     addItems(state, action) {
       const addedItems = action.payload;
       state.items = state.items.concat(addedItems);
-      state.filteredItems = state.items;
     },
     removeSelectedItems(state) {
       state.items = state.items.filter((item) => !item.isSelected);
-
-      state.filteredItems = state.items.filter(
-        (item) => item.category === state.filterCategory
-      );
-
-      if (state.filteredItems.length === 0) {
-        state.filterCategory = '';
-        state.filteredItems = state.items;
-      }
     },
     selectItem(state, action) {
       const selectedId = action.payload;
@@ -29,21 +19,11 @@ const itemsSLice = createSlice({
         }
         return item;
       });
-      state.filteredItems = state.filteredItems.map((item) => {
-        if (item.id === selectedId) {
-          item.isSelected = !item.isSelected;
-        }
-        return item;
-      });
     },
     setFilterCategory(state, action) {
       state.filterCategory = action.payload;
-      state.filteredItems = state.items.filter(
-        (item) => item.category === state.filterCategory
-      );
     },
     clearFilter(state) {
-      state.filteredItems = state.items;
       state.filterCategory = '';
     },
   },
