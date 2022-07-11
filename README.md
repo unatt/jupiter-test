@@ -34,7 +34,7 @@
 
 ## Демо
 
-Я настроил деплой на Firebase, демо можно посмотреть здесь — [React Test App](https://jupiter-test-a0449.web.app/).
+Я настроил автодеплой на Netlify, демо можно посмотреть здесь — [React Test App](https://resonant-bunny-d8a737.netlify.app/).
 
 ### Локальный запуск
 
