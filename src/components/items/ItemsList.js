@@ -6,15 +6,16 @@ import classes from './ItemsList.module.css';
 import Item from './Item';
 import ItemsSelectFilter from '../filters/ItemsSelectFilter';
 import { itemsActions } from '../../store/items-slice';
-import { fetchItemsData } from '../../store/items-slice';
+import { uiActions } from '../../store/ui-slice';
+import { fetchItemsData } from '../../store/items-actions';
 
 const ItemsList = () => {
   const filteredItems = useSelector((state) => {
-    if (state.items.filterCategory) {
-      return state.items.items.filter(
-        (item) => item.category === state.items.filterCategory
-      );
-    } else return state.items.items;
+    return state.items.filterCategory
+      ? state.items.items.filter(
+          (item) => item.category === state.items.filterCategory
+        )
+      : state.items.items;
   });
 
   const categories = useSelector((state) => [
@@ -24,35 +25,26 @@ const ItemsList = () => {
   const selectedCategory = useSelector((state) => state.items.filterCategory);
   const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    setIsLoading(true);
-    setError(null);
     try {
       dispatch(fetchItemsData());
     } catch (error) {
-      setError(error);
+      dispatch(
+        uiActions.showNotification({
+          status: 'error',
+          title: 'Error',
+          message: error,
+        })
+      );
     }
-    setIsLoading(false);
   }, [dispatch]);
 
   const loadMorePages = () => {
     setPage((page) => (page += 1));
     dispatch(fetchItemsData(page));
   };
-
-  let content;
-
-  if (error) {
-    content = <p>{error}</p>;
-  }
-
-  if (isLoading) {
-    content = <p>Loading...</p>;
-  }
 
   const handleUserKeyPress = useCallback(
     (event) => {
@@ -72,10 +64,13 @@ const ItemsList = () => {
 
   return (
     <main className={classes['main-area']}>
-      <section>
-        <ItemsButtonsFilter categories={categories} />
-        <ItemsSelectFilter categories={categories} />
-      </section>
+      {filteredItems.length !== 0 && (
+        <section>
+          <ItemsButtonsFilter categories={categories} />
+          <ItemsSelectFilter categories={categories} />
+        </section>
+      )}
+
       <section>
         <div className={classes.oucontainer}>
           <div className={classes.incontainer}>
@@ -91,18 +86,15 @@ const ItemsList = () => {
             ))}
           </div>
         </div>
-        <div className={classes['loading-status']}>{content}</div>
-        {!selectedCategory && (
-          <div className={classes.loader}>
-            <button
-              onClick={loadMorePages}
-              className={classes['loader-button']}
-            >
-              LOAD MORE
-            </button>
-          </div>
-        )}
       </section>
+
+      {!selectedCategory && filteredItems.length !== 0 && (
+        <div className={classes.loader}>
+          <button onClick={loadMorePages} className={classes['loader-button']}>
+            LOAD MORE
+          </button>
+        </div>
+      )}
     </main>
   );
 };
