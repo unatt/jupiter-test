@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# Пример React приложения
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Были выполнены следующие требования по верстке:
 
-## Available Scripts
 
-In the project directory, you can run:
+1. Не использовать плагины галереи или подобные, которые сделают за вас основную задачу.
+2. Использовать Flexbox модель и Grid для вёрстки.
+3. Мобильная верстка должна отображаться при ширине менее 540 px.
+4. Десктопный вариант тянется по ширине максимум для отображения 4 колонок, после этого контент не тянется, увеличиваются только отступы по краям.
+5. При выборе категории отображаются только картинки этой категории, при выборе "Show all" отобразить все картинки.
 
-### `npm start`
+## Возможности приложения:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. При старте приложения происходит Fetch запрос в базу данных Firebase и загрузка первых 9 элементов.
+2. Исходя из категорий загруженных элементов формируется фильтр по категориям - в виде кнопок для десктопа и select dropdown для мобильного. Для опции select был сделан кастомный стиль dropdown.
+3. При выборе фильтра отображаются только элементы выбранной категории, при выборе Show All - все.
+4. Нажатие на метку категории внутри картинки также переключает отображения категории.
+5. Нажатие кнопки "Load more" подгружает еще 9 картинок (картинки загружаются те же самые, просто изменяются имена проектов).
+6. Для десктопа сделана возможность выбрать картинку нажав на нее, добавляется подсветка зеленым цветом для выделенных картинок, исходя из макета. Повторное нажатие убирает подсветку.
+7. На десктопе, если есть выбранная картинка, при нажатии кнопки "Del" картинка удаляется. После чего она отображается в том числе при переключении категорий.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Комментарии реализации
 
-### `npm test`
+* Создавал приложение с помощью Create React App.
+* Испольховал Fetch API для работы с базой данных Firebase.
+* Использовал Redux, Redux-thunk для глобального состояния. В данной задаче можно было бы обойтись и Context API, но решил попрактиковать redux.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## TODO
+* Использовать Redux для глобального состояния
+***
+* Исправить недочеты верстки, использовать SСSS.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Демо
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Я настроил деплой на Firebase, демо можно посмотреть здесь — [React Test App](https://jupiter-test-a0449.web.app/).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Локальный запуск
+npm start
+Открыть http://localhost:3000/
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
