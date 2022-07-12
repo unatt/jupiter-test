@@ -1,14 +1,12 @@
 @import '../../styles/colors';
 @import '../../styles/widths';
 
-
 .selection-filter {
   background-color: $bg-color;
   display: flex;
   justify-content: center;
   align-self: center;
   padding: 40px 0;
-
 }
 
 .custom-select {
@@ -21,7 +19,7 @@
   padding: 0.25em 0.5em;
   font-size: 1.25rem;
   cursor: pointer;
-  background-color: transparent;
+  background-color: #fff;
 
   &::after,
   select {
