@@ -8,15 +8,21 @@ import ItemsSelectFilter from '../filters/ItemsSelectFilter';
 import { itemsActions } from '../../store/items-slice';
 import { uiActions } from '../../store/ui-slice';
 import { fetchItemsData } from '../../store/items-actions';
+import { createSelector } from '@reduxjs/toolkit';
+
+const filteredItemsSelector = createSelector(
+  (state) => state.items.items,
+  (state) => state.items.filterCategory,
+  (items, filterCategory) => {
+    return filterCategory
+      ? items.filter((item) => item.category === filterCategory)
+      : items;
+  }
+);
 
 const ItemsList = () => {
-  const filteredItems = useSelector((state) => {
-    return state.items.filterCategory
-      ? state.items.items.filter(
-          (item) => item.category === state.items.filterCategory
-        )
-      : state.items.items;
-  });
+
+  const filteredItems = useSelector(filteredItemsSelector);
 
   const categories = useSelector((state) => [
     ...new Set(state.items.items.map((item) => item.category)),
