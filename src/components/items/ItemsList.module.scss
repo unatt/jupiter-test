@@ -1,6 +1,8 @@
+@import '../../styles/colors';
+@import '../../styles/widths';
+
 .main-area {
-  /* background-color: #fdf0e9; */
-  background-color: #fdf0e9;
+  background-color: $bg-color;
 }
 
 .loader {
@@ -15,14 +17,13 @@
   border-style: none;
   font-size: 14px;
   font-weight: 900;
-  color: #391400;
+  color: $main-color;
+  &:hover {
+    border: $main-color solid 1px;
+  }
 }
 
-.loader-button:hover {
-  border: #391400 solid 1px;
-}
-
-@media screen and (max-width: 1040px) {
+@media screen and (max-width: $mobile) {
   .incontainer {
     display: flex;
     flex-direction: column;
@@ -33,7 +34,7 @@
   }
 }
 
-@media screen and (min-width: 1040px) and (max-width: 1600px) {
+@media screen and (min-width: $mobile) and (max-width: 1600px) {
   .incontainer {
     display: flex;
     flex-wrap: wrap;

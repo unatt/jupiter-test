@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './ItemsButtonsFilter.module.css';
+import classes from './ItemsButtonsFilter.module.scss';
 import FilterButton from './FilterButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { itemsActions } from '../../store/items-slice';

@@ -1,0 +1,60 @@
+@import '../../styles/colors';
+@import '../../styles/widths';
+
+
+.selection-filter {
+  background-color: $bg-color;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  padding: 40px 0;
+
+}
+
+.custom-select {
+  display: grid;
+  grid-template-areas: 'select';
+  align-items: center;
+  width: 90%;
+  border: 1px solid $active-color;
+  border-radius: 5px;
+  padding: 0.25em 0.5em;
+  font-size: 1.25rem;
+  cursor: pointer;
+  background-color: transparent;
+
+  &::after,
+  select {
+    grid-area: select;
+  }
+
+  &::after {
+    content: '';
+    width: 0.8em;
+    height: 0.5em;
+    justify-self: end;
+    background-color: $active-color;
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+    pointer-events: none;
+  }
+}
+
+select {
+  appearance: none;
+  border: none;
+  background-color: $bg-color;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  outline: none;
+  color: $main-color;
+}
+
+@media screen and (min-width: $mobile) {
+  .selection-filter {
+    display: none;
+  }
+}

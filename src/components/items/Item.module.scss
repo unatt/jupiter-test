@@ -1,0 +1,56 @@
+@import '../../styles/colors';
+@import '../../styles/widths';
+
+.item {
+  box-sizing: border-box;
+  position: relative;
+  border-radius: 10px;
+  background-color: transparent;
+  min-width: $minimum-w;
+  height: 416px;
+  overflow: hidden;
+  img {
+    object-fit: cover;
+  }
+}
+
+.actions {
+  position: absolute;
+  left: 48px;
+  bottom: 54px;
+  text-align: left;
+  z-index: 5;
+  .title {
+    font-weight: 800;
+    font-size: 40px;
+    color: #fff;
+  }
+  .category-button {
+    width: 102px;
+    height: 38px;
+    background-color: #fff;
+    border-radius: 14px;
+    border-style: none;
+    color: $main-color;
+    font-size: 16px;
+    margin-bottom: 37px;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 2px #666;
+    }
+    &:active {
+      box-shadow: 0 2px #666;
+      transform: translateY(4px);
+    }
+  }
+}
+
+.selected {
+  outline: 6px solid $selected-color;
+}
+
+@media screen and (max-width: $mobile) {
+  .item {
+    width: $minimum-w;
+  }
+}

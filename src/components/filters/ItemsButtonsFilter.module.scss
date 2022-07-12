@@ -1,0 +1,16 @@
+@import '../../styles/colors';
+@import '../../styles/widths';
+
+.filter-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 175px;
+  background-color: $bg-color;
+  @media screen and (max-width: $mobile) {
+    & {
+      display: none;
+    }
+  }
+}

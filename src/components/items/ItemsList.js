@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ItemsButtonsFilter from '../filters/ItemsButtonsFilter';
-import classes from './ItemsList.module.css';
+import classes from './ItemsList.module.scss';
 import Item from './Item';
 import ItemsSelectFilter from '../filters/ItemsSelectFilter';
 import { itemsActions } from '../../store/items-slice';

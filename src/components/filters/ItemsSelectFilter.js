@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './ItemsSelectFilter.module.css';
+import classes from './ItemsSelectFilter.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { itemsActions } from '../../store/items-slice';
 
@@ -19,8 +19,8 @@ const ItemsSelectFilter = ({ categories }) => {
 
   return (
     <div className={classes['selection-filter']}>
-      <div className={classes.select}>
-        <select onChange={selectHandler} value={selectedCategory}>
+      <div className={classes['custom-select']} >
+        <select onChange={selectHandler}  value={selectedCategory}>
           <option value="all">Show All</option>
           {categories.map((category) => (
             <option value={category} key={category}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Item.module.css';
+import classes from './Item.module.scss';
 import { useDispatch } from 'react-redux';
 import { itemsActions } from '../../store/items-slice';
 
